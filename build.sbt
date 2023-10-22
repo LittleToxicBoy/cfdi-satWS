@@ -1,10 +1,6 @@
 lazy val akkaHttpVersion = "10.5.3"
 lazy val akkaVersion    = "2.8.5"
 
-// Run in a separate JVM, to make sure sbt waits until all threads have
-// finished before returning.
-// If you want to keep the application running while executing other
-// sbt tasks, consider https://github.com/spray/sbt-revolver/
 fork := true
 
 resolvers += "Akka library repository".at("https://repo.akka.io/maven")
@@ -25,6 +21,9 @@ lazy val root = (project in file(".")).
 
       "com.typesafe.akka" %% "akka-http-testkit"        % akkaHttpVersion % Test,
       "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion     % Test,
-      "org.scalatest"     %% "scalatest"                % "3.2.9"         % Test
+      "org.scalatest"     %% "scalatest"                % "3.2.9"         % Test,
+
+      "net.codingwell" %% "scala-guice" % "5.1.1",
+      "commons-codec" % "commons-codec" % "1.15",
     )
   )

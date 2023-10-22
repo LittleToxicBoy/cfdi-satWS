@@ -4,7 +4,8 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
-import cfdi.satws.CfdiRoutes
+import cfdi.satws.{CfdiMainMethods, CfdiRoutes}
+import com.google.inject.Guice
 
 import scala.util.Failure
 import scala.util.Success
@@ -29,8 +30,10 @@ object QuickstartApp {
 
   def main(args: Array[String]): Unit = {
     val rootBehavior = Behaviors.setup[Nothing] { context =>
+      val injector = Guice.createInjector(new AppModuleGuice)
 
-      val routes = new CfdiRoutes
+      val routes = injector.getInstance(classOf[CfdiRoutes])
+
       startHttpServer(routes.cfdiRoutes)(context.system)
 
       Behaviors.empty
